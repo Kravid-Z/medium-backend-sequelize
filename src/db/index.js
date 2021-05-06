@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize } from "sequelize";
 import Author from "../services/authors/authorsModel.js";
 import Article from "../services/articles/articlesModel.js";
 import Review from "../services/reviews/reviewsModel.js";
@@ -12,14 +12,15 @@ const sequelize = new Sequelize(
   { port: process.env.PGPORT, host: process.env.PGHOST, dialect: "postgres" }
 );
 
-Author.hasMany(Articles);
+const DataTypes = Sequelize.DataTypes;
 
 const models = {
-  Author: Author(Sequelize, DataTypes),
-  Article: Article(Sequelize, DataTypes),
-  Review: Review(Sequelize, DataTypes),
-  Category: Category(Sequelize, DataTypes),
-  User: User(Sequelize, DataTypes),
+  Category: Category(sequelize, DataTypes),
+  Author: Author(sequelize, DataTypes),
+  Article: Article(sequelize, DataTypes),
+  Review: Review(sequelize, DataTypes),
+
+  User: User(sequelize, DataTypes),
 };
 
 Object.keys(models).forEach((modelName) => {

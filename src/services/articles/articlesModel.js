@@ -19,10 +19,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      category: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
+
     },
   );
   Article.associate = (models) =>{

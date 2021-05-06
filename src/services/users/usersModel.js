@@ -26,7 +26,7 @@ export default (sequelize, DataTypes) => {
       },
     );
     User.associate = (models) =>{
-        User.hasMany(models.Reviews)
+        User.hasMany(models.Review)
     }
     return User;
   };
