@@ -1,14 +1,14 @@
 import express from "express";
-import Author from "./authorsModel.js";
-import Article from "../articles/articlesModel.js";
+import User from "./usersModel.js";
+import Review from "../reviews/reviewsModel.js";
 const router = express.Router();
 
 router
   .route("/")
   .get(async (req, res, next) => {
     try {
-      const authors = await Author.findAll({ include: Article });
-      res.status(200).send(authors);
+      const users = await User.findAll({ include: Review });
+      res.status(200).send(users);
     } catch (e) {
       console.log(e);
       next(e);
@@ -16,8 +16,8 @@ router
   })
   .post(async (req, res, next) => {
     try {
-      const author = await Author.create(req.body);
-      res.status(200).send(author);
+      const user = await User.create(req.body);
+      res.status(200).send(user);
     } catch (e) {
       console.log(e);
       next(e);
@@ -26,7 +26,7 @@ router
 
 router.route("/createAll").post(async (req, res, next) => {
   try {
-    const data = await Author.bulkCreate(req.body.data);
+    const data = await User.bulkCreate(req.body.data);
     res.status(200).send(data);
   } catch (e) {
     console.log(e);
@@ -37,8 +37,8 @@ router
   .route("/:id")
   .get(async (req, res, next) => {
     try {
-      const author = await Author.findByPk(req.params.id);
-      res.status(200).send(author);
+      const user = await User.findByPk(req.params.id);
+      res.status(200).send(user);
     } catch (e) {
       console.log(e);
       next(e);
@@ -46,11 +46,11 @@ router
   })
   .put(async (req, res, next) => {
     try {
-      const author = await Author.update(req.body, {
+      const user = await User.update(req.body, {
         where: { id: req.params.id },
         returning: true,
       });
-      res.status(200).send({ msgg: "Succesfully edited", author });
+      res.status(200).send({ msgg: "Succesfully edited", user });
     } catch (e) {
       console.log(e);
       next(e);
@@ -58,7 +58,7 @@ router
   })
   .delete(async (req, res, next) => {
     try {
-      const rows = await Author.destroy({ where: { id: req.params.id } });
+      const rows = await User.destroy({ where: { id: req.params.id } });
       if (rows > 0) {
         res.status(204).send();
       } else {
